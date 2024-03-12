@@ -13,7 +13,7 @@
     padding: 5px 10px;
     position: absolute;
     z-index: 1;
-    bottom: 100%;
+    bottom: 115%;
     margin-left: -60px;
     opacity: 0;
     transition: opacity 0.3s;
@@ -23,8 +23,8 @@
   .tooltip .tooltiptext::after {
     content: "";
     position: absolute;
-    top: 100%;
-    left: 50%;
+    top: 95%;
+    left: 45%;
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;

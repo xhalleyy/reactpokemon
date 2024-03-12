@@ -1,15 +1,15 @@
-import pokeLocation from "../interfaces/interface";
+import {IPokeLocation, IPokemon} from "../interfaces/interface";
 
 // API calls
 const pokemonApi = async (pokemon: string) => {
     const promise = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
-    const data: object = await promise.json();
+    const data: IPokemon = await promise.json();
     return data;
 }
 
 const locationApi = async (location: string) => {
     const promise = await fetch(location);
-    const data: pokeLocation = await promise.json();
+    const data: IPokeLocation = await promise.json();
     return data;
 }
 
@@ -24,3 +24,5 @@ const evolutionApi = async (evolution: string) => {
     const data: object = await promise.json();
     return data;
 }
+
+export {pokemonApi, locationApi, speciesApi, evolutionApi}
