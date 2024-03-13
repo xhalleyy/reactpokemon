@@ -1,13 +1,26 @@
-import React from 'react'
-
+import React, { useContext, useEffect } from 'react'
+import UserContext from '../UserContext/UserContext'
+import { pokemonApi } from '../services/DataServices';
+import { Accordion, AccordionContent, AccordionPanel, AccordionTitle } from 'flowbite-react';
 const BodyComponent = () => {
+  const activePokemon = useContext(UserContext);
+
+  useEffect(() => {
+    const pikachu = async () => {
+      activePokemon?.setPokemon(await pokemonApi("pikachu"))
+    }
+    pikachu();
+
+  },[])
+
+
   return (
     <div className='grid grid-cols-5 mt-5'>
       <div className='lg:col-span-2 col-span-5'>
         <div className='md:ms-20 lg:me-0 md:me-20 ms-5 me-5 bg-white/90 rounded-lg drop-shadow-xl'>
             <div className='grid grid-cols-2 px-10 items-center pt-3'>
                 <div className='col-span-1 flex justify-start'>
-                    <h1 className='font-kodchasan-semi text-4xl xl:text-6xl'>Pokémon</h1>
+                    <h1 className='font-kodchasan-semi text-4xl xl:text-6xl'>{`${activePokemon?.pokemon?.name.charAt(0).toUpperCase()}${activePokemon?.pokemon?.name.slice(1)}`}</h1>
                 </div>
                 <div className='col-span-1 flex justify-end'>
                     <svg className='xl:w-12 w-8 cursor-pointer'
@@ -22,16 +35,45 @@ const BodyComponent = () => {
                 <p className='inline-block bg-blue-200 px-8 mx-5 mt-5 font-kodchasan-medium text-lg xl:text-xl rounded-2xl'>Default</p>
             </div>
             <div className='flex justify-center'>
-                <img src="" alt="" className='xl:h-96 cursor-pointer' />
+                <img src={activePokemon?.pokemon?.sprites.other['official-artwork'].front_default} alt="" className='xl:h-96 cursor-pointer' />
             </div>
             <div className='flex lg:justify-start justify-center'>
-                <p className='inline-block bg-pink-200 px-8 mx-5 mt-2 mb-5 font-kodchasan-medium text-lg xl:text-xl rounded-2xl'></p>
+                <p className='inline-block bg-pink-200 px-8 mx-5 mt-2 mb-5 font-kodchasan-medium text-lg xl:text-xl rounded-2xl'>{activePokemon?.pokemon?.types.map(pokeEl => pokeEl.type.name).join(", ")}</p>
             </div>
         </div>
       </div>
       <div className='lg:col-span-3 col-span-5 lg:me-20 lg:ms-10 md:ms-10 md:me-10 ms-5 me-5 mt-5 lg:mt-0'>
-        <div className='bg-pink-200/95 rounded-lg drop-shadow-xl'>
-            {/* Accordion Part */}
+        <Accordion className='bg-pink-200/95 rounded-lg drop-shadow-xl'>
+            <AccordionPanel className='rounded-lg'>
+                <AccordionTitle className='font-kodchasan-medium text-xl lg:text-2xl xl:text-3xl'>Abilities</AccordionTitle>
+                <AccordionContent aria-labelledby="accordion-flush-heading-1">
+                    <div className=''>
+                        <p className="font-kodchasan-reg md:text-xl xl:text-2xl mb-2 px-5 text-gray-800 dark:text-gray-400">
+                            {activePokemon?.pokemon?.abilities.map(pokeAbility => pokeAbility.ability.name).join(", ")}
+                        </p>
+                    </div>
+                </AccordionContent>
+                
+            </AccordionPanel>
+            <AccordionPanel className='rounded-lg'>
+                <AccordionTitle className='font-kodchasan-medium text-xl lg:text-2xl xl:text-3xl'>Moves</AccordionTitle>
+                <AccordionContent>
+                    <p className="font-kodchasan-reg xl:text-xl mb-2 px-5 text-gray-800 dark:text-gray-400">
+                      {activePokemon?.pokemon?.moves.map(pokeMoves => pokeMoves.move.name).join(", ").replaceAll('-', ' ')}
+                    </p>
+
+                </AccordionContent>
+            </AccordionPanel>
+            <div className='px-5 py-3'>
+              <h2 className='font-kodchasan-medium text-xl lg:text-2xl xl:text-3xl text-gray-800'>Location</h2>
+              <p className='font-kodchasan-reg md:text-xl xl:text-2xl text-gray-800 dark:text-gray-400 pt-2'></p>
+            </div>
+        </Accordion>
+        <div className='bg-sky-200 rounded-lg lg:mt-8 mt-5 mb-4'>
+          <div className='px-5 py-3 font-kodchasan-medium text-xl lg:text-2xl xl:text-3xl text-gray-800 dark:text-gray-400'>
+            Evolution Paths 
+            <p className='font-kodchasan-reg lg:text-xl xl:text-2xl text-gray-800 dark:text-gray-400 py-3'></p>
+          </div>
         </div>
       </div>
     </div>

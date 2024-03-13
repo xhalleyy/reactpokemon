@@ -1,39 +1,45 @@
 import title from '../assets/title.png';
 import pokeball from '../assets/pokeballtab.png';
 import './Pokemon.css';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { pokemonApi } from '../services/DataServices';
 import { IPokemon } from '../interfaces/interface';
+import UserContext from '../UserContext/UserContext';
 
 const NavbarComponent = () => {
-
+  const  pokeContext = useContext(UserContext);
   const [pokeName, setPokeName] = useState<string>('');
-  const [newPokemon, setNewPokemon] = useState<IPokemon>();
+  // const [newPokemon, setNewPokemon] = useState<IPokemon>();
   
-  // useEffect(() => {
+
   //   const fetchData = async (pokemon: string) => {
+  //   try {
   //     const data = await pokemonApi(pokemon);
   //     setNewPokemon(data);
-  //     console.log(data)
-  //   };
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.error('Error fetching Pokemon data:', error);
+  //     // Handle the error as needed
+  //   }
+  // };
   
-  //   // fetchData("pikachu");
-    
-  // }, []);
+  const handleSavePoke = async () => {
+    try{
+      const pokemonData = await pokemonApi(pokeName);
+      let gen = pokemonData.id;
 
-    const fetchData = async (pokemon: string) => {
-    try {
-      const data = await pokemonApi(pokemon);
-      setNewPokemon(data);
-      console.log(data);
-    } catch (error) {
-      console.error('Error fetching Pokemon data:', error);
-      // Handle the error as needed
+      if (gen <650) {
+        pokeContext?.setPokemon(pokemonData)
+        console.log(pokeContext?.pokemon)
+        console.log(pokeContext)
+        // fetchData(pokeName)
+      }else {
+        alert("Please Pick a Pokemon from Gen 1-5!");
+      }
     }
-  };
-  
-  const handleSavePoke = () => {
-    fetchData(pokeName)
+    catch(error){
+      alert("That wasn't a valid Pokemon! Try Again.");
+    }
   }
 
   return (

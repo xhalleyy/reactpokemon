@@ -23,13 +23,15 @@ export interface IPokeLocation {
 }
 
 export interface IPokemon {
-    abilities: [
+    abilities: [{
+
         ability: {
             name: string,
             url: string
         },
         is_hidden: boolean,
         slot: number
+    }
     ],
     base_experience: number, 
     cries: {
@@ -65,7 +67,8 @@ export interface IPokemon {
     is_default: boolean,
     location_area_encounters: string,
     moves: [
-        move: {
+        {
+            move: {
             name: string,
             url: string
         },
@@ -80,6 +83,7 @@ export interface IPokemon {
                 url: string
             }
         ]
+        }
     ],
     name: string,
     order: number,
@@ -352,5 +356,15 @@ export interface ISpecies {
         url: string
     },
     has_gender_differences: boolean,
-    
+    hatch_counter: number,
+    id: number,
+    is_baby: boolean,
+    is_legendary: boolean,
+    name: string,
+    names: [ 
+        language:  {
+            name: string,
+            url: string
+        }
+    ]
 }
