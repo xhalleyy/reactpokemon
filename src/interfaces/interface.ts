@@ -25,36 +25,118 @@ export interface IPokeLocation {
 export interface IEvolution {
     baby_trigger_item: null,
     chain: {
-       evolution_details: [],
-       evolves_to: [{
-        evolution_details: [{
-            gender: null,
-            held_item: null,
-            item: null,
-            known_move: null,
-            known_move_type: null,
-            location: null,
-            min_affection: null,
-            min_beauty: null,
-            min_happiness: number,
-            min_level: null,
-            needs_overworld_rain: boolean,
-            party_species: null,
-            party_type: null,
-            relative_physical_stats: null,
-            time_of_day: string,
-            trade_species: null,
-            trigger: {
-                name: string,
-                url: string
-            },
-            turn_upside_down: boolean
-        }],
-        evolves_to: [{
-            evolution_details:[]
-        }]
-       }] 
-    }
+        evolution_details: [],
+        evolves_to: [
+            {
+                evolution_details: [
+                    {
+                        gender: null,
+                        held_item: null,
+                        item: null,
+                        known_move: null,
+                        known_move_type: null,
+                        location: null,
+                        min_affection: null,
+                        min_beauty: null,
+                        min_happiness: number,
+                        min_level: null,
+                        needs_overworld_rain: boolean,
+                        party_species: null,
+                        party_type: null,
+                        relative_physical_stats: null,
+                        time_of_day: string,
+                        trade_species: null,
+                        trigger: {
+                            name: string,
+                            url: string
+                        },
+                        turn_upside_down: boolean
+                    }
+                ],
+                evolves_to: [
+                    {
+                        evolution_details: [
+                            {
+                                "gender": null,
+                                "held_item": null,
+                                "item": {
+                                    name: string,
+                                    url: string,
+                                },
+                                "known_move": null,
+                                "known_move_type": null,
+                                "location": null,
+                                "min_affection": null,
+                                "min_beauty": null,
+                                "min_happiness": number,
+                                "min_level": null,
+                                "needs_overworld_rain": boolean,
+                                "party_species": null,
+                                "party_type": null,
+                                "relative_physical_stats": null,
+                                "time_of_day": string,
+                                "trade_species": null,
+                                "trigger": {
+                                    "name": string,
+                                    "url": string
+                                },
+                                turn_upside_down: boolean
+                            }
+                        ],
+                        evolves_to: [
+                            {
+                                evolution_details: [
+                                    {
+                                        "gender": null,
+                                        "held_item": null,
+                                        "item": {
+                                            "name": string,
+                                            "url": string
+                                        },
+                                        "known_move": null,
+                                        "known_move_type": null,
+                                        "location": null,
+                                        "min_affection": null,
+                                        "min_beauty": null,
+                                        "min_happiness": null,
+                                        "min_level": null,
+                                        "needs_overworld_rain": boolean,
+                                        "party_species": null,
+                                        "party_type": null,
+                                        "relative_physical_stats": null,
+                                        "time_of_day": "",
+                                        "trade_species": null,
+                                        "trigger": {
+                                            "name": string,
+                                            "url": string
+                                        },
+                                        "turn_upside_down": boolean
+                                    }
+                                ]
+                            }
+                        ],
+                        is_baby: boolean,
+                        species: {
+                            name: string,
+                            url: string
+                        }
+                    }
+                ],
+                is_baby: boolean,
+                species: {
+                    name: string,
+                    url: string
+                }
+            }
+        ],
+
+        is_baby: boolean,
+        species: {
+            name: string,
+            url: string
+        }
+    },
+    id: number
 }
 
 export interface IPokemon {
@@ -68,7 +150,7 @@ export interface IPokemon {
         slot: number
     }
     ],
-    base_experience: number, 
+    base_experience: number,
     cries: {
         latest: string,
         legacy: string
@@ -98,26 +180,26 @@ export interface IPokemon {
             }
         ]
     ],
-    id: number, 
+    id: number,
     is_default: boolean,
     location_area_encounters: string,
     moves: [
         {
             move: {
-            name: string,
-            url: string
-        },
-        version_group_details: [
-            level_learned_at: number,
-            move_learn_method: {
                 name: string,
                 url: string
             },
-            version_group: {
-                name: string,
-                url: string
-            }
-        ]
+            version_group_details: [
+                level_learned_at: number,
+                move_learn_method: {
+                    name: string,
+                    url: string
+                },
+                version_group: {
+                    name: string,
+                    url: string
+                }
+            ]
         }
     ],
     name: string,
@@ -153,11 +235,11 @@ export interface IPokemon {
                 front_shiny: string
             },
             showdown: {
-                back_default: string, 
+                back_default: string,
                 back_female: string,
                 back_shiny: string,
                 back_shiny_female: string,
-                front_default: string, 
+                front_default: string,
                 front_female: string,
                 front_shiny: string,
                 front_shiny_female: string
@@ -167,17 +249,17 @@ export interface IPokemon {
             'generation-i': {
                 'red-blue': {
                     back_default: string,
-                    back_gray: string, 
+                    back_gray: string,
                     back_transparent: string,
-                    front_default: string, 
+                    front_default: string,
                     front_gray: string,
                     front_transparent: string
                 },
                 yellow: {
                     back_default: string,
-                    back_gray: string, 
+                    back_gray: string,
                     back_transparent: string,
-                    front_default: string, 
+                    front_default: string,
                     front_gray: string,
                     front_transparent: string
                 }
@@ -354,7 +436,7 @@ export interface ISpecies {
         url: string
     },
     evolves_from_species: {
-        name: string, 
+        name: string,
         url: string
     },
     flavor_text_entries: [
@@ -374,7 +456,7 @@ export interface ISpecies {
     genera: [
         genus: string,
         language: {
-            name: string, 
+            name: string,
             url: string
         }
     ],
@@ -396,8 +478,8 @@ export interface ISpecies {
     is_baby: boolean,
     is_legendary: boolean,
     name: string,
-    names: [ 
-        language:  {
+    names: [
+        language: {
             name: string,
             url: string
         }

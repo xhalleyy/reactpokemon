@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IPokeLocation, IPokemon } from "../interfaces/interface"
+import { IEvolution, IPokeLocation, IPokemon, ISpecies } from "../interfaces/interface"
 
 const PokeHooks = () => {
 
@@ -7,7 +7,13 @@ const PokeHooks = () => {
 
   const [location, setLocation] = useState<IPokeLocation[]>();
 
-  return {pokemon, setPokemon, location, setLocation}
+  const [species, setSpecies] = useState<ISpecies>();
+
+  const [evolution, setEvolution] = useState<IEvolution>();
+  
+  const [evolutionLine, setEvolutionLine] = useState<string[]>([]);
+
+  return {pokemon, setPokemon, location, setLocation, evolution, setEvolution, species, setSpecies, evolutionLine, setEvolutionLine}
 }
 
 export default PokeHooks

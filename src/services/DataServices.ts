@@ -1,4 +1,4 @@
-import {IPokeLocation, IPokemon} from "../interfaces/interface";
+import {IEvolution, IPokeLocation, IPokemon, ISpecies} from "../interfaces/interface";
 
 // API calls
 const pokemonApi = async (pokemon: string) => {
@@ -15,13 +15,13 @@ const locationApi = async (location: string) => {
 
 const speciesApi = async (species: string) => {
     const promise = await fetch(species);
-    const data: object = await promise.json();
+    const data: ISpecies = await promise.json();
     return data;
 }
 
 const evolutionApi = async (evolution: string) => {
     const promise = await fetch(evolution);
-    const data: object = await promise.json();
+    const data: IEvolution = await promise.json();
     return data;
 }
 
