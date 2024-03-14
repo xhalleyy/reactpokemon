@@ -1,15 +1,23 @@
-import React, { useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import UserContext from '../UserContext/UserContext'
-import { pokemonApi } from '../services/DataServices';
+import { locationApi, pokemonApi } from '../services/DataServices';
 import { Accordion, AccordionContent, AccordionPanel, AccordionTitle } from 'flowbite-react';
+import locationContext from '../UserContext/LocationContext';
 const BodyComponent = () => {
   const activePokemon = useContext(UserContext);
+  const activeLocation = useContext(locationContext);
 
   useEffect(() => {
     const pikachu = async () => {
       activePokemon?.setPokemon(await pokemonApi("pikachu"))
     }
+
+    const location = async () => {
+      activeLocation?.setLocation(await locationApi("https://pokeapi.co/api/v2/pokemon/25/encounters"))
+    }
+
     pikachu();
+    location();
 
   },[])
 
@@ -66,7 +74,9 @@ const BodyComponent = () => {
             </AccordionPanel>
             <div className='px-5 py-3'>
               <h2 className='font-kodchasan-medium text-xl lg:text-2xl xl:text-3xl text-gray-800'>Location</h2>
-              <p className='font-kodchasan-reg md:text-xl xl:text-2xl text-gray-800 dark:text-gray-400 pt-2'></p>
+              <p className='font-kodchasan-reg md:text-xl xl:text-2xl text-gray-800 dark:text-gray-400 pt-2'>
+                { activeLocation?.location && activeLocation?.location.length > 0 ? activeLocation?.location[0].location_area.name : 'Unknown'}
+              </p>
             </div>
         </Accordion>
         <div className='bg-sky-200 rounded-lg lg:mt-8 mt-5 mb-4'>

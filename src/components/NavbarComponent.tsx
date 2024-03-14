@@ -1,37 +1,32 @@
 import title from '../assets/title.png';
 import pokeball from '../assets/pokeballtab.png';
 import './Pokemon.css';
-import { useContext, useEffect, useState } from 'react';
-import { pokemonApi } from '../services/DataServices';
+import { useContext, useState } from 'react';
+import { locationApi, pokemonApi } from '../services/DataServices';
 import { IPokemon } from '../interfaces/interface';
 import UserContext from '../UserContext/UserContext';
+import locationContext from '../UserContext/LocationContext';
 
 const NavbarComponent = () => {
   const  pokeContext = useContext(UserContext);
+  const pokeLocation = useContext(locationContext);
   const [pokeName, setPokeName] = useState<string>('');
   // const [newPokemon, setNewPokemon] = useState<IPokemon>();
   
-
-  //   const fetchData = async (pokemon: string) => {
-  //   try {
-  //     const data = await pokemonApi(pokemon);
-  //     setNewPokemon(data);
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.error('Error fetching Pokemon data:', error);
-  //     // Handle the error as needed
-  //   }
-  // };
   
   const handleSavePoke = async () => {
     try{
       const pokemonData = await pokemonApi(pokeName);
+      console.log(pokemonData.location_area_encounters);
+      const locationData = await locationApi(pokemonData.location_area_encounters);
+      // console.log(locationData)
       let gen = pokemonData.id;
 
       if (gen <650) {
         pokeContext?.setPokemon(pokemonData)
+        pokeLocation?.setLocation(locationData);
         console.log(pokeContext?.pokemon)
-        console.log(pokeContext)
+        console.log(pokeLocation?.location)
         // fetchData(pokeName)
       }else {
         alert("Please Pick a Pokemon from Gen 1-5!");
@@ -43,7 +38,7 @@ const NavbarComponent = () => {
   }
 
   return (
-    <div className='grid grid-cols-2 pt-10'>
+    <div className='grid grid-cols-2 pt-5'>
       <div className='ms-6 col-span-2 lg:col-span-1 flex justify-center lg:justify-start'>
         <img
           src={title}

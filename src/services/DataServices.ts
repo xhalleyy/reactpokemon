@@ -9,7 +9,7 @@ const pokemonApi = async (pokemon: string) => {
 
 const locationApi = async (location: string) => {
     const promise = await fetch(location);
-    const data: IPokeLocation = await promise.json();
+    const data: IPokeLocation[] = await promise.json();
     return data;
 }
 
