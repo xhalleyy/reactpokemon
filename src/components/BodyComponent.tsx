@@ -5,7 +5,6 @@ import { Accordion, AccordionContent, AccordionPanel, AccordionTitle } from 'flo
 import locationContext from '../UserContext/LocationContext';
 import SpeciesContext from '../UserContext/SpeciesContext';
 import EvolContext from '../UserContext/EvolutionContext';
-import { IEvolution } from '../interfaces/interface';
 
 const BodyComponent = () => {
 

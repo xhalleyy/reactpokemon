@@ -22,6 +22,35 @@ const NavbarComponent = () => {
     window.location.reload();
   }
 
+  const randomizedPoke = async () => {
+    let randomNum: number = Math.floor(Math.random() * 650);
+    const pokemonData = await pokemonApi(randomNum.toString());
+    const locationData = await locationApi(pokemonData.location_area_encounters);
+    const speciesData = await speciesApi(pokemonData.species.url);
+    const evolutionData = await evolutionApi(speciesData.evolution_chain.url);
+
+    pokeContext?.setPokemon(pokemonData)
+    pokeLocation?.setLocation(locationData);
+    speciesContext?.setSpecies(speciesData);
+    evolutionContext?.setEvolution(evolutionData);
+    console.log(pokeContext?.pokemon)
+    console.log(pokeLocation?.location)
+    console.log(speciesContext?.species)
+    console.log(evolutionContext?.evolution);
+
+    let evolArray: string[] = []
+    evolutionData.chain.evolves_to.map(evo => {
+      if (evo.evolves_to.length > 0) {
+        evo.evolves_to.map(evol2 => {
+          evolArray.push(`${evolutionData.chain.species.name} → ${evo.species.name} → ${evol2.species.name}`);
+        })
+      } else {
+        evolArray.push(evolutionData.chain.species.name + ' → ' + evo.species.name);
+      }
+    })
+    evolutionContext?.setEvolutionLine(evolArray);
+  }
+
 
   const handleSavePoke = async () => {
     try {
@@ -33,7 +62,7 @@ const NavbarComponent = () => {
       let gen: number = pokemonData.id;
 
       if (gen < 650) {
-        pokeContext?.setPokemon(pokemonData)
+        pokeContext?.setPokemon(pokemonData);
         pokeLocation?.setLocation(locationData);
         speciesContext?.setSpecies(speciesData);
         evolutionContext?.setEvolution(evolutionData);
@@ -75,7 +104,7 @@ const NavbarComponent = () => {
         />
       </div>
       <div className='lg:col-span-1 col-span-2 flex justify-center lg:justify-end items-center'>
-        <div className='tooltip'>
+        <div className='tooltip' onClick={randomizedPoke}>
           <img src={pokeball} alt="Random Pokemon" className='cursor-pointer' style={{ height: '55px' }} />
           <span className='tooltiptext font-kodchasan-reg xl:text-xl text-sm md:text-xl'>Random Pokémon</span>
         </div>
@@ -90,7 +119,7 @@ const NavbarComponent = () => {
         </div>
         <div className='lg:me-12 xl:me-14'>
           <div className='hidden lg:block'>
-            <FavoritesComponent/>
+            <FavoritesComponent />
             {/* <button className='font-kodchasan-medium text-2xl lg:text-xl xl:text-3xl bg-sky-200 border-2 border-black px-2 rounded-md' type="button" data-drawer-target="drawer-example" data-drawer-show="drawer-example"
               aria-controls="drawer-example">Favorites</button> */}
           </div>
