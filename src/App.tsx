@@ -6,6 +6,7 @@ import BodyComponent from './components/BodyComponent';
 import locationContext from './UserContext/LocationContext';
 import EvolContext from './UserContext/EvolutionContext';
 import SpeciesContext from './UserContext/SpeciesContext';
+import FavoritesComponent from './components/FavoritesComponent';
 function App() {
   return (
     <UserContext.Provider value={PokeHooks()}>
@@ -15,6 +16,7 @@ function App() {
             <div className='bgImg'>
               <NavbarComponent />
               <BodyComponent />
+
             </div>
 
           </EvolContext.Provider>

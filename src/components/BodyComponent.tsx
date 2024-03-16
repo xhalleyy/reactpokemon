@@ -14,9 +14,9 @@ const BodyComponent = () => {
   const activeSpecies = useContext(SpeciesContext);
   const activeEvolution = useContext(EvolContext);
   const [pikachuEvo, setPikachuEvo] = useState<string[]>(['pichu → pikachu → raichu'])
+  const [shiny, setShiny] = useState<boolean>(false);
 
-  // let evolArray = [];
-  // let evolChain = activeEvolution?.evolution?.chain;
+
 
   useEffect(() => {
     const pikachu = async () => {
@@ -45,6 +45,13 @@ const BodyComponent = () => {
 
   }, [])
 
+  const toggleShiny = () => {
+    setShiny(shiny => !shiny);
+  }
+
+  const defaultClass: string = 'inline-block bg-blue-200 px-8 mx-5 mt-5 font-kodchasan-medium text-lg xl:text-xl rounded-2xl';
+  const shinyClass: string = 'inline-block bg-yellow-200 px-8 mx-5 mt-5 font-kodchasan-medium text-lg xl:text-xl rounded-2xl';
+
 
   return (
     <div className='grid grid-cols-5 mt-5'>
@@ -64,10 +71,14 @@ const BodyComponent = () => {
             </div>
           </div>
           <div>
-            <p className='inline-block bg-blue-200 px-8 mx-5 mt-5 font-kodchasan-medium text-lg xl:text-xl rounded-2xl'>Default</p>
-          </div>
+            <p className={!shiny ? defaultClass : shinyClass}>{!shiny ? 'Default' : 'Shiny'}</p>
+          </div>\
           <div className='flex justify-center'>
-            <img src={activePokemon?.pokemon?.sprites.other['official-artwork'].front_default} alt="" className='xl:h-96 cursor-pointer' />
+            <img 
+              src={!shiny ? activePokemon?.pokemon?.sprites.other['official-artwork'].front_default : activePokemon?.pokemon?.sprites.other['official-artwork'].front_shiny} 
+              alt="" className='xl:h-96 cursor-pointer'
+              onClick={toggleShiny}
+              />
           </div>
           <div className='flex lg:justify-start justify-center'>
             <p className='inline-block bg-pink-200 px-8 mx-5 mt-2 mb-5 font-kodchasan-medium text-lg xl:text-xl rounded-2xl'>{activePokemon?.pokemon?.types.map(pokeEl => pokeEl.type.name).join(", ")}</p>
@@ -77,8 +88,8 @@ const BodyComponent = () => {
       <div className='lg:col-span-3 col-span-5 lg:me-20 lg:ms-10 md:ms-10 md:me-10 ms-5 me-5 mt-5 lg:mt-0'>
         <Accordion className='bg-pink-200/95 rounded-lg drop-shadow-xl'>
           <AccordionPanel className='rounded-lg'>
-            <AccordionTitle className='font-kodchasan-medium text-xl lg:text-2xl xl:text-3xl'>Abilities</AccordionTitle>
-            <AccordionContent aria-labelledby="accordion-flush-heading-1">
+            <AccordionTitle className='font-kodchasan-medium !text-black !py-3 text-xl lg:text-2xl xl:text-3xl'>Abilities</AccordionTitle>
+            <AccordionContent aria-labelledby="accordion-flush-heading-1" className='!py-5'>
               <div className=''>
                 <p className="font-kodchasan-reg md:text-xl xl:text-2xl text-gray-800 dark:text-gray-400">
                   {activePokemon?.pokemon?.abilities.map(pokeAbility => pokeAbility.ability.name).join(", ")}
@@ -88,7 +99,7 @@ const BodyComponent = () => {
 
           </AccordionPanel>
           <AccordionPanel className='rounded-lg'>
-            <AccordionTitle className='font-kodchasan-medium text-xl lg:text-2xl xl:text-3xl'>Moves</AccordionTitle>
+            <AccordionTitle className='font-kodchasan-medium !text-black !py-3 text-xl lg:text-2xl xl:text-3xl'>Moves</AccordionTitle>
             <AccordionContent>
               <p className="font-kodchasan-reg xl:text-xl text-gray-800 dark:text-gray-400">
                 {activePokemon?.pokemon?.moves.map(pokeMoves => pokeMoves.move.name).join(", ").replaceAll('-', ' ')}
