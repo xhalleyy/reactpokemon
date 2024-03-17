@@ -1,5 +1,6 @@
 ### React Pokemon API
 - Search for a Pokemon from Gen1-5 by Name or by their ID. Click the Image to change between the pokemon's default and shiny.
+- Console Errors/Warnings due to Flowbite's Accordion. Tried to change prop names from the shadow dom but it threw the same errors.  
 
 Halley Pham
 
