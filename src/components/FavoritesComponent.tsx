@@ -62,7 +62,7 @@ export default function FavoritesComponent({isFavorited, setIsFavorited}: Favori
           {
             renderFavs.map((favPoke, idx) => {
               return (
-                <div key={idx} className="grid grid-cols-2 bg-white my-5 py-1 ps-2 rounded-2xl items-center cursor-pointer">
+                <div key={idx} className="grid grid-cols-2 bg-white my-3 py-1 ps-2 rounded-2xl items-center cursor-pointer xl:w-80">
                   <p className="font-kodchasan-medium col-span-1 text-gray-800 text-2xl" onClick={async () => {
                     searchPokemon(favPoke);
                     setOpen(false);

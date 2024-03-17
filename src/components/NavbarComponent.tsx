@@ -53,7 +53,7 @@ const NavbarComponent = ({isFavorited, setIsFavorited}: NavbarComponentProps) =>
 
   const handleSavePoke = async () => {
     try {
-      const pokemonData = await pokemonApi(pokeName);
+      const pokemonData = await pokemonApi(pokeName.toLowerCase());
       const locationData = await locationApi(pokemonData.location_area_encounters);
       const speciesData = await speciesApi(pokemonData.species.url);
       const evolutionData = await evolutionApi(speciesData.evolution_chain.url);
@@ -99,16 +99,17 @@ const NavbarComponent = ({isFavorited, setIsFavorited}: NavbarComponentProps) =>
       </div>
       <div className='lg:col-span-1 col-span-2 flex justify-center lg:justify-end items-center'>
         <div className='tooltip' onClick={randomizedPoke}>
-          <img src={pokeball} alt="Random Pokemon" className='cursor-pointer' style={{ height: '55px' }} />
+          <img src={pokeball} alt="Random Pokemon" className='cursor-pointer' style={{ height: '46px' }} />
           <span className='tooltiptext font-kodchasan-reg xl:text-xl text-sm md:text-xl'>Random Pokémon</span>
         </div>
-        <div className='bg-white rounded-md border-2 border-black'>
-          <input value={pokeName} onChange={(e) => setPokeName(e.target.value)} type="text" placeholder="Enter a Pokémon" className='font-kodchasan-semi text-xl md:text-2xl lg:text-xl xl:text-3xl ps-1 xl:ps-2 text-gray-400 w-44 md:w-56 lg:w-44 xl:w-72 xl:h-10' />
+        <div className='bg-white rounded-md border-2 border-black xl:ms-2'>
+          <input value={pokeName} onChange={(e) => setPokeName(e.target.value)} type="text" placeholder="Enter a Pokémon" className='font-kodchasan-semi text-lg md:text-2xl lg:text-lg xl:text-3xl ps-1 xl:ps-2 py-0 text-gray-400 w-44 md:w-56 lg:w-44 xl:w-72 xl:h-9 border-0 rounded-md' />
         </div>
         <div onClick={handleSavePoke} className='cursor-pointer bg-yellow-200 border-2 border-black px-2 rounded-md mx-1 md:mx-3'>
           <p className='font-kodchasan-medium lg:text-xl xl:text-3xl text-2xl hidden lg:block'>Search</p>
           <div className='lg:hidden flex justify-center'>
             {/* need to figure out how to add material icon font */}
+            <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
           </div>
         </div>
         <div className='lg:me-12 xl:me-14'>
