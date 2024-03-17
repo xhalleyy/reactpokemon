@@ -5,8 +5,14 @@ import { Accordion, AccordionContent, AccordionPanel, AccordionTitle } from 'flo
 import locationContext from '../UserContext/LocationContext';
 import SpeciesContext from '../UserContext/SpeciesContext';
 import EvolContext from '../UserContext/EvolutionContext';
+import { getLocal, removeFromLocal, saveToLocal } from '../helpers/LocalStorageFunctions';
 
-const BodyComponent = () => {
+type BodyComponentProps = {
+  isFavorited: boolean
+  setIsFavorited: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const BodyComponent = ({isFavorited, setIsFavorited}: BodyComponentProps) => {
 
   const activePokemon = useContext(UserContext);
   const activeLocation = useContext(locationContext);
@@ -14,7 +20,8 @@ const BodyComponent = () => {
   const activeEvolution = useContext(EvolContext);
   const [pikachuEvo, setPikachuEvo] = useState<string[]>(['pichu → pikachu → raichu'])
   const [shiny, setShiny] = useState<boolean>(false);
-
+  // const [isFavorited, setIsFavorited] = useState<boolean>(false);
+  
 
 
   useEffect(() => {
@@ -44,6 +51,15 @@ const BodyComponent = () => {
 
   }, [])
 
+  useEffect(()=> {
+    let favPokemons = getLocal();
+    if(favPokemons.includes(activePokemon?.pokemon?.name ?? 'pikachu')){
+      setIsFavorited(true);
+    }else{
+      setIsFavorited(false);
+    }
+  },[activePokemon?.pokemon?.name])
+
   const toggleShiny = () => {
     setShiny(shiny => !shiny);
   }
@@ -61,12 +77,31 @@ const BodyComponent = () => {
               <h1 className='font-kodchasan-semi text-4xl xl:text-6xl'>{`${activePokemon?.pokemon?.name.charAt(0).toUpperCase()}${activePokemon?.pokemon?.name.slice(1)}`}</h1>
             </div>
             <div className='col-span-1 flex justify-end'>
-              <svg className='xl:w-12 w-8 cursor-pointer'
+              {
+                isFavorited ?  <svg className='xl:w-12 w-8 cursor-pointer'
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 -960 960 960"
+                onClick={()=> {removeFromLocal(activePokemon?.pokemon?.name ?? "")
+                setIsFavorited(false)
+                }}>
+                <path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Z"/>
+              </svg> :  <svg className='xl:w-12 w-8 cursor-pointer'
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 -960 960 960"
+                onClick={()=> {saveToLocal(activePokemon?.pokemon?.name ?? "")
+                setIsFavorited(true)
+              }}
+                >
+                <path
+                  d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z" />
+              </svg>
+              }
+              {/* <svg className='xl:w-12 w-8 cursor-pointer'
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 -960 960 960">
                 <path
                   d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z" />
-              </svg>
+              </svg> */}
             </div>
           </div>
           <div>
@@ -88,7 +123,7 @@ const BodyComponent = () => {
         <Accordion className='bg-pink-200/95 rounded-lg drop-shadow-xl'>
           <AccordionPanel className='rounded-lg'>
             <AccordionTitle className='font-kodchasan-medium !text-black !py-3 text-xl lg:text-2xl xl:text-3xl'>Abilities</AccordionTitle>
-            <AccordionContent aria-labelledby="accordion-flush-heading-1" className='!py-5'>
+            <AccordionContent className='!py-5'>
               <div className=''>
                 <p className="font-kodchasan-reg md:text-xl xl:text-2xl text-gray-800 dark:text-gray-400">
                   {activePokemon?.pokemon?.abilities.map(pokeAbility => pokeAbility.ability.name).join(", ")}

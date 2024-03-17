@@ -9,8 +9,11 @@ import EvolContext from '../UserContext/EvolutionContext';
 import SpeciesContext from '../UserContext/SpeciesContext';
 import FavoritesComponent from './FavoritesComponent';
 
-
-const NavbarComponent = () => {
+type NavbarComponentProps = {
+  isFavorited: boolean
+  setIsFavorited: React.Dispatch<React.SetStateAction<boolean>>
+}
+const NavbarComponent = ({isFavorited, setIsFavorited}: NavbarComponentProps) => {
   const pokeContext = useContext(UserContext);
   const pokeLocation = useContext(locationContext);
   const speciesContext = useContext(SpeciesContext);
@@ -33,10 +36,6 @@ const NavbarComponent = () => {
     pokeLocation?.setLocation(locationData);
     speciesContext?.setSpecies(speciesData);
     evolutionContext?.setEvolution(evolutionData);
-    console.log(pokeContext?.pokemon)
-    console.log(pokeLocation?.location)
-    console.log(speciesContext?.species)
-    console.log(evolutionContext?.evolution);
 
     let evolArray: string[] = []
     evolutionData.chain.evolves_to.map(evo => {
@@ -55,7 +54,6 @@ const NavbarComponent = () => {
   const handleSavePoke = async () => {
     try {
       const pokemonData = await pokemonApi(pokeName);
-      console.log(pokemonData.location_area_encounters);
       const locationData = await locationApi(pokemonData.location_area_encounters);
       const speciesData = await speciesApi(pokemonData.species.url);
       const evolutionData = await evolutionApi(speciesData.evolution_chain.url);
@@ -66,10 +64,6 @@ const NavbarComponent = () => {
         pokeLocation?.setLocation(locationData);
         speciesContext?.setSpecies(speciesData);
         evolutionContext?.setEvolution(evolutionData);
-        console.log(pokeContext?.pokemon)
-        console.log(pokeLocation?.location)
-        console.log(speciesContext?.species)
-        console.log(evolutionContext?.evolution);
 
         let evolArray: string[] = []
         evolutionData.chain.evolves_to.map(evo => {
@@ -119,7 +113,7 @@ const NavbarComponent = () => {
         </div>
         <div className='lg:me-12 xl:me-14'>
           <div className='hidden lg:block'>
-            <FavoritesComponent />
+            <FavoritesComponent isFavorited={isFavorited} setIsFavorited={setIsFavorited} />
             {/* <button className='font-kodchasan-medium text-2xl lg:text-xl xl:text-3xl bg-sky-200 border-2 border-black px-2 rounded-md' type="button" data-drawer-target="drawer-example" data-drawer-show="drawer-example"
               aria-controls="drawer-example">Favorites</button> */}
           </div>
